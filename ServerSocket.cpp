@@ -39,7 +39,7 @@ public:
     ServerSocket(){
 
         portNumber = 7000;
-        socketfd = socket(AF_INET, SOCK_STREAM, 0);
+        socketfd = socket(AF_INET, SOCK_STREAM, 0); /// socket() creates a new socket.
 
         if (socketfd < 0){
             error("ERROR opening socket");
@@ -100,7 +100,7 @@ public:
             error("ERROR writing to socket");
         }
 
-        std::cout<< "Message sent!";
+        std::cout<< "Message sent! \n";
     }
 
     /**
@@ -109,7 +109,7 @@ public:
     void closeSocket(){
         close(newSocketfd);
         close(socketfd);
-        std::cout << "Socket closed!";
+        std::cout << "Socket closed! \n";
     }
 
 };
@@ -119,4 +119,6 @@ int main() {
     ServerSocket *serverSocket = new ServerSocket();
     serverSocket->receiveMessage();
     serverSocket->closeSocket();
+
+    return 0;
 }
