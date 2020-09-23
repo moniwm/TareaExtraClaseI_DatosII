@@ -3,4 +3,10 @@ project(Tarea1_Datos2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Tarea1_Datos2 main.cpp ServerSocket.cpp ClientSocket.cpp)
+add_executable( Tarea1_Datos2
+        main.cpp
+        ServerSocket.cpp
+        ClientSocket.cpp
+        GraphExample.cpp
+        Graph.cpp
+)

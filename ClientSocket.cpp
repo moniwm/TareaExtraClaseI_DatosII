@@ -1,3 +1,12 @@
+/**
+ * @brief This file contains the code referring to the implementation of a client using sockets
+ *
+ * @author Monica Waterhouse Montoya
+ * @version 1.0
+ * @since 09/20/2020
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
