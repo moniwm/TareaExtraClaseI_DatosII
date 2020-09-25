@@ -77,6 +77,40 @@ public:
         return;
     }
 
+    bool contains(T data){
+        NodeLL<T> *tempPtr = head;
+        while(tempPtr != nullptr){
+            if(tempPtr->getData().compare(data) == 0){
+                return true;
+            }
+            tempPtr = tempPtr->getNext();
+        }
+        return false;
+    }
+
+    void remove(T data){
+
+        NodeLL<T> *currentPtr = this->head;
+        NodeLL<T> *nextPtr = currentPtr->getNext();
+
+        if(head->getData()==data){
+            this->head = head->getNext();
+            return;
+        }
+
+        while (nextPtr != nullptr){
+
+            if(nextPtr->getData() == data) {
+                currentPtr->setNext(nextPtr->getNext());
+                return;
+            }
+
+            currentPtr = currentPtr->getNext();
+            nextPtr = currentPtr->getNext();
+        }
+
+    }
+
     void printList()
     {
         NodeLL<T> *node = this->head;
@@ -92,7 +126,12 @@ int main(){
     LinkedList<std::string> *list = new LinkedList<std::string>();
     list->insertElement("Hola");
     list->insertElement("soy");
+    list->insertElement("que tal");
     list->insertElement("Moni");
+    list->printList();
+
+    list->remove("soy");
+
     list->printList();
     return 0;
 }
