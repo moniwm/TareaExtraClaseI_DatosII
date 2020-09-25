@@ -26,6 +26,13 @@ public:
     std::string getValue(){
         return this->value;
     }
+    void addAdjNode(T *adjNode){
+        adjacentNodes->insertElement(adjNode);
+    }
+    LinkedList<T> *getAdjNodes(){
+        return this->adjacentNodes;
+    }
+
 };
 
 class AdjacentNodes{
@@ -46,23 +53,61 @@ public:
         return this->cost;
     }
 
-    std::string returnValue(){
-        return adjNode->getValue();
+    std::string getValue(){
+        return this->adjNode->getValue();
     }
+};
+
+class Graph{
+
+    LinkedList<Vertex<AdjacentNodes> > *vertexes;
+    int numberVertexes;
+
+public:
+    Graph(int numberVertexes){
+        this->vertexes = new LinkedList<Vertex<AdjacentNodes> >();
+        this->numberVertexes = numberVertexes;
+    }
+    ~Graph(){
+        delete this->vertexes;
+        delete this;
+    }
+
+    void createGraph(){
+        Vertex<AdjacentNodes> *v1 = new Vertex<AdjacentNodes>("A");
+        Vertex<AdjacentNodes> *v2 = new Vertex<AdjacentNodes>("B");
+        Vertex<AdjacentNodes> *v3 = new Vertex<AdjacentNodes>("C");
+
+        this->vertexes->insertElement(v1);
+        this->vertexes->insertElement(v2);
+        this->vertexes->insertElement(v3);
+    }
+
+    void addAdjacency(int cost, Vertex<AdjacentNodes> *node){
+        AdjacentNodes *adjNode = new AdjacentNodes(this->vertexes->getFirst()->getNext()->getData(), cost);
+        this->vertexes->getFirst()->getData()->addAdjNode(adjNode);
+
+    }
+
+    void printFirst(){
+        std::cout<< vertexes->getFirst()->getData()->getValue() <<"\n";
+        std::cout<< "This is the adjacent node for v1: " << vertexes->getFirst()->getData()->getAdjNodes()->getFirst()->getData()->getValue();
+        std::cout<< "This is the cost: " << vertexes->getFirst()->getData()->getAdjNodes()->getFirst()->getData()->getCost();
+    }
+
+    LinkedList<Vertex<AdjacentNodes> > *getVertexes(){
+        return this->vertexes;
+    }
+
 };
 
 int main(){
 
-    LinkedList<Vertex<AdjacentNodes> > *vertexes = new LinkedList<Vertex<AdjacentNodes> >();
-    Vertex<AdjacentNodes> *v1 = new Vertex<AdjacentNodes>("Hola");
-    Vertex<AdjacentNodes> *v2 = new Vertex<AdjacentNodes>("soy");
-    Vertex<AdjacentNodes> *v3 = new Vertex<AdjacentNodes>("Moni");
+    Graph *graph = new Graph(7);
+    graph->createGraph();
+    graph->addAdjacency(10, graph->getVertexes()->getFirst()->getNext()->getData());
+    graph->printFirst();
 
-    vertexes->insertElement(v1);
-    vertexes->insertElement(v2);
-    vertexes->insertElement(v3);
-
-    std::cout << vertexes->getFirst()->getNext()->getData()->getValue();
 
     return 0;
 }
