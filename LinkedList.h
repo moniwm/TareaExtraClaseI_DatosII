@@ -1,6 +1,5 @@
 /**
- * @brief This code contains the data structures and algortithms that are neccesary to create a graph to which a Floyd-Marshall
- * algorithm will be applied to.
+ * @brief This code contains the structure for a Linked List using generics.
  *
  * @author Mónica Waterhouse.
  * @version 1.0
@@ -10,14 +9,19 @@
 
 #include <iostream>
 
-template <typename T>
+template <typename T> /// template is used to add flexibility to the class and methods so we can work with different data types.
+
+/**
+ * The NodeLL class represents each node of a linked list.
+ * @tparam T The data type that will be stored in the node
+ */
 class NodeLL{
 
-    T data;
+    T *data;
     NodeLL<T> *nextNode;
 
 public:
-    NodeLL(T data){
+    NodeLL(T *data){
         this->data = data;
 
     }
@@ -27,9 +31,19 @@ public:
         delete this;
     }
 
-    T getData(){
+    /**
+     *
+     * @return returns the data stored in the node
+     */
+
+    T *getData(){
         return this->data;
     }
+
+    /**
+     *
+     * @return returns a pointer to the adjacent node
+     */
 
     NodeLL<T> *getNext(){
         return this->nextNode;
@@ -43,6 +57,10 @@ public:
 
 template <typename T>
 
+/**
+ * This class contains the structure to create a basic Linked List
+ * @tparam T allows to create linked lists with different data types
+ */
 class LinkedList{
 
     NodeLL<T> *head;
@@ -58,7 +76,11 @@ public:
         delete this;
     }
 
-    void insertElement(T data){
+    /**
+     *
+     * @param data the data value that will be stored in a node at the end of the list
+     */
+    void insertElement(T *data){
         NodeLL<T> *newNode = new NodeLL<T>(data);
         NodeLL<T> *tempPtr = this->head;
 
@@ -77,6 +99,11 @@ public:
         return;
     }
 
+    /**
+     *
+     * @param data the value of the data the user wants to look for
+     * @return true if the data exists in the list, otherwise it return false
+     */
     bool contains(T data){
         NodeLL<T> *tempPtr = head;
         while(tempPtr != nullptr){
@@ -88,6 +115,14 @@ public:
         return false;
     }
 
+    NodeLL<T> *getFirst(){
+        return this->head;
+    }
+
+    /**
+     *
+     * @param data the value of the data that the user wants to eliminate and
+     */
     void remove(T data){
 
         NodeLL<T> *currentPtr = this->head;
@@ -119,20 +154,7 @@ public:
             std::cout <<" "<<node->getData();
             node = node->getNext();
         }
+        delete node;
     }
 };
-
-int main(){
-    LinkedList<std::string> *list = new LinkedList<std::string>();
-    list->insertElement("Hola");
-    list->insertElement("soy");
-    list->insertElement("que tal");
-    list->insertElement("Moni");
-    list->printList();
-
-    list->remove("soy");
-
-    list->printList();
-    return 0;
-}
 

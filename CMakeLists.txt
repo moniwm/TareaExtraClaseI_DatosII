@@ -7,5 +7,6 @@ add_executable( Tarea1_Datos2
         main.cpp
         ServerSocket.cpp
         ClientSocket.cpp
-        LinkedList.cpp
+        LinkedList.h
+        Graph.cpp
 )
