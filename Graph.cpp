@@ -217,6 +217,7 @@ public:
         else{
             Vertex *newVertex = new Vertex(inputValue);
             this->vertices->insertElement(newVertex);
+            this->checkVertexConnections();
         }
 
     }
@@ -227,6 +228,7 @@ public:
         while(ptr != nullptr){
             if(ptr->getData()->getValue() == vertexName){
                 this->vertices->remove(ptr->getData());
+                deleteEdge(vertexName);
                 return;
             }
             ptr = ptr->getNext();
@@ -242,6 +244,10 @@ public:
         this->edges->insertElement(newEdge);
 
     }
+
+    /**
+     * This method is used to make sure that every vertex has a connection to it and from it.
+     */
 
     void checkVertexConnections(){
         NodeLL<Vertex> *ptr = this->vertices->getFirst();
@@ -300,6 +306,8 @@ public:
             std::string endTemp = ptrEdge->getData()->getEndNodes()->getValue();
             if(startTemp.compare(start)==0 && endTemp.compare(end)==0){
                 edges->remove(ptrEdge->getData());
+                startVertex->deleteDestinyNode();
+                endVertex->deleteIncomingNode();
                 return;
             }
 
@@ -311,6 +319,31 @@ public:
         delete endVertex;
 
     }
+
+    void deleteEdge(std::string vertexName){
+        NodeLL<Edge> *ptrEdge = this->edges->getFirst();
+
+        while(ptrEdge != nullptr){
+            std::string startTemp = ptrEdge->getData()->getStartVertex()->getValue();
+            std::string endTemp = ptrEdge->getData()->getEndNodes()->getValue();
+
+            if(startTemp == vertexName) {
+                ptrEdge->getData()->getEndNodes()->deleteIncomingNode();
+                this->edges->remove(ptrEdge->getData());
+            }
+            else if(endTemp == vertexName){
+                ptrEdge->getData()->getStartVertex()->deleteDestinyNode();
+                this->edges->remove(ptrEdge->getData());
+            }
+
+            ptrEdge = ptrEdge->getNext();
+        }
+        checkVertexConnections();
+    }
+
+    /**
+     * This method is used to eliminate edges that contain nodes that doesn't exist anymore
+     */
 
     LinkedList<Edge> *getEdges(){
         return this->edges;
