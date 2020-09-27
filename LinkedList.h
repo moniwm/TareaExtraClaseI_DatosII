@@ -88,6 +88,7 @@ public:
 
         if(this->head == nullptr){
             this->head = newNode;
+            this->size++;
             return;
         }
 
@@ -96,6 +97,7 @@ public:
         }
 
         tempPtr->setNext(newNode);
+        this->size++;
         return;
     }
 
@@ -123,13 +125,14 @@ public:
      *
      * @param data the value of the data that the user wants to eliminate and
      */
-    void remove(T data){
+    void remove(T *data){
 
         NodeLL<T> *currentPtr = this->head;
         NodeLL<T> *nextPtr = currentPtr->getNext();
 
         if(head->getData()==data){
             this->head = head->getNext();
+            this->size--;
             return;
         }
 
@@ -137,6 +140,7 @@ public:
 
             if(nextPtr->getData() == data) {
                 currentPtr->setNext(nextPtr->getNext());
+                this->size--;
                 return;
             }
 
@@ -155,6 +159,10 @@ public:
             node = node->getNext();
         }
         delete node;
+    }
+
+    int getSize(){
+        return this->size;
     }
 };
 
