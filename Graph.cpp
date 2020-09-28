@@ -163,6 +163,10 @@ class Graph{
         return nullptr;
     }
 
+    void createAdjacencyMatrix(){
+
+    }
+
 public:
 
 
@@ -320,6 +324,22 @@ public:
 
     }
 
+    bool doesEdgeExist(std::string start, std::string end){
+
+        NodeLL<Edge> *ptrEdge = this->edges->getFirst();
+        while(ptrEdge != nullptr){
+            std::string startTemp = ptrEdge->getData()->getStartVertex()->getValue();
+            std::string endTemp = ptrEdge->getData()->getEndNodes()->getValue();
+            if(startTemp.compare(start)==0 && endTemp.compare(end)==0){
+                return true;
+            }
+
+            ptrEdge = ptrEdge->getNext();
+        }
+
+        return false;
+    }
+
     void deleteEdge(std::string vertexName){
         NodeLL<Edge> *ptrEdge = this->edges->getFirst();
 
@@ -341,13 +361,87 @@ public:
         checkVertexConnections();
     }
 
+
+
+    Edge *getEdge(std::string start, std::string end){
+
+        NodeLL<Edge> *ptrEdge = this->edges->getFirst();
+        while(ptrEdge != nullptr){
+            std::string startTemp = ptrEdge->getData()->getStartVertex()->getValue();
+            std::string endTemp = ptrEdge->getData()->getEndNodes()->getValue();
+            if(startTemp.compare(start)==0 && endTemp.compare(end)==0){
+                return ptrEdge->getData();
+            }
+            ptrEdge = ptrEdge->getNext();
+        }
+        return nullptr;
+    }
+
     /**
-     * This method is used to eliminate edges that contain nodes that doesn't exist anymore
+     * This method creates an adjacency matrix with the graph vertices and then it creates a new matrix
+     * with the shortest path between each pair of vertices.
+     *
      */
 
-    LinkedList<Edge> *getEdges(){
-        return this->edges;
+    void floydWarshall(){
+
+        numberVertices = this->vertices->getSize();
+        int adjMatrix[numberVertices][numberVertices];
+        int infinite = 999999;
+
+        /**
+         * This part of the method creates the adjacency matrix.
+         */
+        std::string start;
+        std::string end;
+        NodeLL<Vertex> *rowPtr = this->vertices->getFirst();
+        NodeLL<Vertex> *columnPtr;
+
+        for(int i = 0; i < numberVertices; i++){
+            start = rowPtr->getData()->getValue();
+            columnPtr = this->vertices->getFirst();
+
+            for(int j = 0; j < numberVertices; j++){
+                end = columnPtr->getData()->getValue();
+                if (start == end){
+                    adjMatrix[i][j] = 0;
+                }
+                else{
+                    if(doesEdgeExist(start, end)){
+                        adjMatrix[i][j] = this->getEdge(start, end)->getCost();
+                    }
+                    else{
+                        adjMatrix[i][j] = infinite;
+                    }
+                }
+
+                columnPtr = columnPtr->getNext();
+            }
+
+            rowPtr = rowPtr->getNext();
+        }
+
+        /**
+         * This part implements the Floyd Warshall algorithm to modify the adjacency matrix
+         * in order to obtain a matrix with the cheapest cost from one vertex to another.
+         */
+
+        int newDistance;
+
+        for(int k = 0; k < numberVertices; k++){
+            for(int i = 0; i < numberVertices; i++){
+                for(int j = 0; j < numberVertices; j++){
+                    newDistance = adjMatrix[i][k] + adjMatrix[k][j];
+                    if(newDistance < adjMatrix[i][j]){
+                        adjMatrix[i][j] = newDistance;
+                    }
+                }
+            }
+        }
+
     }
+
+
 
 };
 
@@ -365,7 +459,7 @@ int main(){
     std::cout<<"\n";
     graph->deleteVertex(nameDelete);
     graph->printVertices();
-
+    graph->deleteEdge("a", "b");
 
     return 0;
 }
