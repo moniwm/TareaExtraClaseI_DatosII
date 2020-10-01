@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable( Tarea1_Datos2
         main.cpp
-        ServerSocket.cpp
+        ServerSocket.h
         ClientSocket.cpp
         LinkedList.h
         Graph.cpp

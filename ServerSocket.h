@@ -114,11 +114,4 @@ public:
 
 };
 
-int main() {
 
-    ServerSocket *serverSocket = new ServerSocket();
-    serverSocket->receiveMessage();
-    serverSocket->closeSocket();
-
-    return 0;
-}
