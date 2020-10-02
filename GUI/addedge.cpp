@@ -12,3 +12,11 @@ AddEdge::~AddEdge()
 {
     delete ui;
 }
+
+void AddEdge::on_pushButton_clicked()
+{
+    std::string startVertex = ui->comboBox_StartVertex->currentText().toStdString();
+    std::string endVertex = ui->comboBox_EndVertex->currentText().toStdString();
+    int cost = ui->spinBox_Cost->value();
+    this->close();
+}

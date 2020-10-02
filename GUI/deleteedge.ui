@@ -34,7 +34,7 @@
     <string>DELETE EDGE</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btn_deleteEdgeConfirm">
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -86,7 +86,7 @@
     <string>To:</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="comboBox_start">
    <property name="geometry">
     <rect>
      <x>160</x>
@@ -96,7 +96,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox_2">
+  <widget class="QComboBox" name="comboBox_end">
    <property name="geometry">
     <rect>
      <x>300</x>

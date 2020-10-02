@@ -15,6 +15,9 @@ public:
     explicit AddEdge(QWidget *parent = nullptr);
     ~AddEdge();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::AddEdge *ui;
 };

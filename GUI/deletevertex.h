@@ -15,6 +15,9 @@ public:
     explicit DeleteVertex(QWidget *parent = nullptr);
     ~DeleteVertex();
 
+private slots:
+    void on_btn_deleteVertexConfirm_clicked();
+
 private:
     Ui::DeleteVertex *ui;
 };

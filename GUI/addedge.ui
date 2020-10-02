@@ -65,7 +65,7 @@
     <string>From: </string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="comboBox_StartVertex">
    <property name="geometry">
     <rect>
      <x>100</x>
@@ -113,7 +113,7 @@
     <string>To:</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox_2">
+  <widget class="QComboBox" name="comboBox_EndVertex">
    <property name="geometry">
     <rect>
      <x>340</x>
@@ -161,7 +161,7 @@
     <string>Cost: </string>
    </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox">
+  <widget class="QSpinBox" name="spinBox_Cost">
    <property name="geometry">
     <rect>
      <x>220</x>

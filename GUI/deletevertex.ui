@@ -34,7 +34,7 @@
     <string>DELETE VERTEX</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btn_deleteVertexConfirm">
    <property name="geometry">
     <rect>
      <x>200</x>
@@ -60,7 +60,7 @@
     <string>Select the vertex you want to delete: </string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="comboBox_VertexName">
    <property name="geometry">
     <rect>
      <x>240</x>

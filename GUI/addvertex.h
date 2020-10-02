@@ -15,6 +15,9 @@ public:
     explicit AddVertex(QWidget *parent = nullptr);
     ~AddVertex();
 
+private slots:
+    void on_btn_AddNewVertex_clicked();
+
 private:
     Ui::AddVertex *ui;
 };
