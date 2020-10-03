@@ -92,12 +92,3 @@ public:
 
 };
 
-int main()
-{
-
-    ClientSocket *clientSocket = new ClientSocket();
-    clientSocket->sendMessage();
-    clientSocket->closeSocket();
-
-    return 0;
-}

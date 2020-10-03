@@ -17,6 +17,7 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    ClientSocket.h \
     addedge.h \
     addvertex.h \
     deleteedge.h \

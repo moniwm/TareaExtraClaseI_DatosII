@@ -9,7 +9,7 @@ add_executable( Tarea1_Datos2
         LinkedList.h
         Graph.cpp
 
-        GUI/ClientSocket.cpp
+        GUI/ClientSocket.h
         GUI/addedge.cpp
         GUI/addedge.h
         GUI/addedge.ui

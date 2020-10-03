@@ -1,6 +1,7 @@
 #include "addvertex.h"
 #include "ui_addvertex.h"
 #include <iostream>
+#include <QMessageBox>
 
 AddVertex::AddVertex(QWidget *parent) :
     QDialog(parent),
@@ -17,7 +18,14 @@ AddVertex::~AddVertex()
 
 void AddVertex::on_btn_AddNewVertex_clicked()
 {
-    std::string vertexName = ui->lineEdit_VertexName->text().toStdString();
+    std::string vertexName = this->getVertex();
+    if(vertexName == ""){
+        QMessageBox::about(this, "Error adding vertex", "You have to give a valid value to the new vertex!");
+    }
     this->close();
 
+}
+
+std::string AddVertex::getVertex(){
+    return ui->lineEdit_VertexName->text().toStdString();
 }

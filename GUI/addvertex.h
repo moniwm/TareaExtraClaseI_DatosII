@@ -14,9 +14,11 @@ class AddVertex : public QDialog
 public:
     explicit AddVertex(QWidget *parent = nullptr);
     ~AddVertex();
+    std::string getVertex();
 
 private slots:
     void on_btn_AddNewVertex_clicked();
+
 
 private:
     Ui::AddVertex *ui;

@@ -16,8 +16,13 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    AddVertex *addVertexWindow;
+    DeleteVertex *deleteVertexWindow;
+    AddEdge *addEdgeWindow;
+    DeleteEdge *deleteEdgeWindow;
 
 private slots:
     void on_btn_addVertex_clicked();
@@ -30,9 +35,5 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    AddVertex *addVertexWindow;
-    DeleteVertex *deleteVertexWindow;
-    AddEdge *addEdgeWindow;
-    DeleteEdge *deleteEdgeWindow;
 };
 #endif // MAINWINDOW_H

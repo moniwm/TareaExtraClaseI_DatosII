@@ -1,12 +1,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "addvertex.h"
+#include "ClientSocket.h"
+
+ClientSocket *client;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    client = new ClientSocket();
+
 }
 
 MainWindow::~MainWindow()
@@ -42,3 +46,4 @@ void MainWindow::on_btn_deleteEdge_clicked()
     deleteEdgeWindow->setModal(true);
     deleteEdgeWindow->exec();
 }
+

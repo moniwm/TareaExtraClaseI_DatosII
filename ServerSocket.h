@@ -36,6 +36,8 @@ public:
     char buffer[256]; /// The server reads characters from the socket connection into this buffer.
     struct sockaddr_in serverAddress, clientAddress; /// Is a structure that contains an  internet address.
 
+
+
     ServerSocket(){
 
         portNumber = 7000;
@@ -92,7 +94,11 @@ public:
             error("Error reading from socket!");
         }
 
-        std::cout<<"The client says: " << buffer;
+        std::cout<<"Operation: " << buffer;
+
+        if(buffer == "1"){
+
+        }
 
         n = write(newSocketfd,"I got your message",18);
 
