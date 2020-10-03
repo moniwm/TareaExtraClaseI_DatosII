@@ -131,17 +131,16 @@ class Graph{
      */
     void initializeGraph(){
 
-        for (int i = 1; i <= numberVertices; i++){
-            std::string name = this->setVertices(i);
-            Vertex*newVertex = new Vertex(name);
-            this->vertices->insertElement(newVertex);
+        std::string name = "A";
+        Vertex*newVertex = new Vertex(name);
+        this->vertices->insertElement(newVertex);
 
-        }
+        name = "B";
+        Vertex*newVertex2 = new Vertex(name);
+        this->vertices->insertElement(newVertex2);
 
-        std::cout << "Add the edges \n";
-       this->checkVertexConnections();
-
-
+        addEdge("A", 5, "B");
+        addEdge("B", 5, "A");
 
     }
 
@@ -163,18 +162,14 @@ class Graph{
         return nullptr;
     }
 
-    void createAdjacencyMatrix(){
-
-    }
-
 public:
 
 
-    Graph(int numberVertices){
+    Graph(){
         this->vertices = new LinkedList<Vertex>();
         this->edges = new LinkedList<Edge>();
-        this->numberVertices = numberVertices;
         this->initializeGraph();
+        this->numberVertices = this->vertices->getSize();
     }
     ~Graph(){
         delete this->vertices;
@@ -445,23 +440,5 @@ public:
 
 };
 
-int main(){
-
-    Graph *graph = new Graph(4);
-    graph->printVertices();
-
-    graph->addVertex();
-    graph->printVertices();
-
-    std::string nameDelete;
-    std::cout << "Which vertex do you want to delete?: ";
-    std::cin>> nameDelete;
-    std::cout<<"\n";
-    graph->deleteVertex(nameDelete);
-    graph->printVertices();
-    graph->deleteEdge("a", "b");
-
-    return 0;
-}
 
 
