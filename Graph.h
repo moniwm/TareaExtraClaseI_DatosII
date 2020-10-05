@@ -205,19 +205,12 @@ public:
     }
 
 
-   void addVertex(){
-        std::string inputValue;
-        std::cout << "Name of the new vertex: ";
-        std::cin >> inputValue;
-        if(containsVertex(inputValue)){
-            std::cout << "The vertex '" << inputValue << "' already exists! \n Try again! \n";
-            this->addVertex();
-        }
-        else{
-            Vertex *newVertex = new Vertex(inputValue);
-            this->vertices->insertElement(newVertex);
-            this->checkVertexConnections();
-        }
+   void addVertex(std::string inputValue){
+
+        Vertex *newVertex = new Vertex(inputValue);
+        this->vertices->insertElement(newVertex);
+        this->checkVertexConnections();
+
 
     }
 

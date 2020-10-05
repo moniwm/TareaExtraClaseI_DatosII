@@ -16,6 +16,8 @@
 #include <netinet/in.h>
 #include <iostream>
 
+using namespace std;
+
 /**
  * @brief This function is called when a system call fails
  * @param msg the message displayed when the error occurs
@@ -96,8 +98,21 @@ public:
 
         std::cout<<"Operation: " << buffer;
 
-        if(buffer == "1"){
+        if(buffer[0]=='1'){
+            std::cout << "Añadamos un vertice";
+        }
 
+        else if(buffer[0]=='2'){
+            std::cout << "Añadamos un edge";
+        }
+        else if(buffer[0]=='3'){
+            std::cout << "Eliminemos un vértice";
+        }
+        else if(buffer[0]=='4'){
+            std::cout << "Eliminemos un edge";
+        }
+        else if(buffer[0]=='5'){
+            std::cout << "Floyd Warshall";
         }
 
         n = write(newSocketfd,"I got your message",18);

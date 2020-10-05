@@ -5,7 +5,10 @@
 int main() {
 
     ServerSocket *serverSocket = new ServerSocket();
-    serverSocket->receiveMessage();
+
+    while(true){
+        serverSocket->receiveMessage();
+    }
     serverSocket->closeSocket();
 
     return 0;

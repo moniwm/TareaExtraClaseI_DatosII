@@ -86,6 +86,65 @@ public:
 
     }
 
+    void addNewVertex(){
+        n = write(socketfd,"1",2);
+
+        /**char vertex[vertexName.size()];
+        strcpy(vertex, vertexName.c_str());
+        n = write(socketfd, vertex, vertexName.size()+1);**/
+    }
+
+    void addNewEdge(){
+
+        n = write(socketfd, "2", 2);
+
+       /**char start[startVertex.size()+1];
+       strcpy(start, startVertex.c_str());
+       n = write(socketfd, start, startVertex.size()+1);
+
+       std::string costValue = std::to_string(cost);
+       char costChar[costValue.size()+1];
+       strcpy(costChar, costValue.c_str());
+       n = write(socketfd, costChar, costValue.size()+1);
+
+       char end[endVertex.size()];
+       strcpy(end, endVertex.c_str());
+       n = write(socketfd, end, endVertex.size()+1);**/
+    }
+
+    void deleteVertex(){
+        n = write(socketfd, "3", 2);
+
+        /**char vertex[vertexName.size()+1];
+        strcpy(vertex, vertexName.c_str());
+        n = write(socketfd, vertex, vertexName.size()+1);**/
+    }
+
+    void deleteEdge(){
+
+        n = write(socketfd, "4", 2);
+
+        /**char start[startVertex.size()+1];
+        strcpy(start, startVertex.c_str());
+        n = write(socketfd, start, startVertex.size()+1);
+
+        char end[endVertex.size()];
+        strcpy(end, endVertex.c_str());
+        n = write(socketfd, end, endVertex.size()+1);**/
+    }
+
+    void requestFloydWarshall(){
+        n = write(socketfd, "5", 2);
+
+        /**char start[startVertex.size()+1];
+        strcpy(start, startVertex.c_str());
+        n = write(socketfd, start, startVertex.size()+1);
+
+        char end[endVertex.size()];
+        strcpy(end, endVertex.c_str());
+        n = write(socketfd, end, endVertex.size()+1);^**/
+    }
+
     void closeSocket(){
         close(socketfd);
     }
