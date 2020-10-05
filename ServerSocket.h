@@ -15,6 +15,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
+#include "Graph.h"
 
 using namespace std;
 
@@ -29,8 +30,10 @@ void error(const char *msg)
 }
 
 class ServerSocket{
+    Graph *graph;
 
 public:
+
     int socketfd, newSocketfd; /// File descriptors.
     int portNumber; /// The port number on which the server accepts connections.
     socklen_t clientLength; /// Stores the size of the address of the client.
@@ -42,6 +45,7 @@ public:
 
     ServerSocket(){
 
+        graph = new Graph();
         portNumber = 7000;
         socketfd = socket(AF_INET, SOCK_STREAM, 0); /// socket() creates a new socket.
 
@@ -99,7 +103,23 @@ public:
         std::cout<<"Operation: " << buffer;
 
         if(buffer[0]=='1'){
-            std::cout << "Añadamos un vertice";
+            bzero(buffer,256);
+
+            n = write(newSocketfd,"Add vertex",18);
+
+            bzero(buffer,256);
+            n = read(newSocketfd,buffer,255);
+
+            std::string message = graph->addVertex(buffer);
+            graph->printVertices();
+
+            char result[message.size()+1];
+            strcpy(result, message.c_str());
+            n = write(newSocketfd, result, strlen(result));
+
+            bzero(buffer,256);
+            n = read(newSocketfd,buffer,255);
+
         }
 
         else if(buffer[0]=='2'){
@@ -115,6 +135,9 @@ public:
             std::cout << "Floyd Warshall";
         }
 
+        if (n < 0){
+            error("ERROR writing to socket");
+        }
         n = write(newSocketfd,"I got your message",18);
 
         if (n < 0){
@@ -134,5 +157,6 @@ public:
     }
 
 };
+
 
 

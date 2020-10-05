@@ -104,27 +104,6 @@ class Graph{
     LinkedList<Edge> *edges;
     int numberVertices;
 
-    /**
-     * This method set the initial graph
-     * @param i rhe amount of vertices that the graph will initially have.
-     * @return the name of the variable just created.
-     */
-
-    std::string setVertices(int i){
-        std::string inputValue;
-        std::cout << "Name of vertex: " << i << " : ";
-        std::cin >> inputValue;
-        NodeLL<Vertex> *ptr = this->vertices->getFirst();
-        while(ptr != nullptr){
-            std::string name = ptr->getData()->getValue();
-            if(inputValue.compare(name)== 0){
-                std::cout << "The vertex '" << name << "' already exists! \n Try again! \n";
-                return this->setVertices(i);
-            }
-            ptr = ptr->getNext();
-        }
-        return inputValue;
-    }
 
     /**
      * This method initialize the graph according to the number of vertexes the user inputs when creating the graph.
@@ -205,11 +184,14 @@ public:
     }
 
 
-   void addVertex(std::string inputValue){
+   std::string addVertex(std::string inputValue){
 
-        Vertex *newVertex = new Vertex(inputValue);
-        this->vertices->insertElement(newVertex);
-        this->checkVertexConnections();
+        if(this->containsVertex(inputValue)){
+            return "The vertex already exists in the graph!";
+        }
+       Vertex *newVertex = new Vertex(inputValue);
+       this->vertices->insertElement(newVertex);
+       return "The vertex has been succesfully added!";
 
 
     }

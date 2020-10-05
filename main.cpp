@@ -1,5 +1,4 @@
 #include <iostream>
-#include "LinkedList.h"
 #include "ServerSocket.h"
 
 int main() {
@@ -9,6 +8,7 @@ int main() {
     while(true){
         serverSocket->receiveMessage();
     }
+
     serverSocket->closeSocket();
 
     return 0;
