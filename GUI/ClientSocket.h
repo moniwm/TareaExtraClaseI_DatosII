@@ -154,6 +154,20 @@ public:
         n = write(socketfd, end, endVertex.size()+1);^**/
     }
 
+    std::string getVertices(){
+        n = write(socketfd, "6", 2);
+
+        bzero(buffer,256);
+        n = read(socketfd,buffer,255);
+
+        std::string message(buffer);
+
+        n = write(socketfd, "Got your message!", 18);
+
+        return message;
+
+    }
+
     void closeSocket(){
         close(socketfd);
     }

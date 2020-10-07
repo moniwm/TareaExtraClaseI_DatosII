@@ -39,6 +39,13 @@ void MainWindow::on_btn_addVertex_clicked()
     }
 
     QMessageBox::about(this, "Add vertex", message);
+
+    std::string vertices = client->getVertices();
+    QString strVertices = QString::fromStdString(vertices);
+
+    QMessageBox::about(this, "Vertices", strVertices);
+
+    this->refreshAdjacencyMatrix();
 }
 
 void MainWindow::on_btn_addEdge_clicked()
@@ -47,6 +54,8 @@ void MainWindow::on_btn_addEdge_clicked()
     addEdgeWindow->setModal(true);
     addEdgeWindow->exec();
     client->addNewEdge();
+
+
 }
 
 void MainWindow::on_btn_deleteVertex_clicked()
@@ -69,4 +78,23 @@ void MainWindow::on_btn_deleteEdge_clicked()
 void MainWindow::on_btn_shortestPath_clicked()
 {
     client->requestFloydWarshall();
+}
+
+void MainWindow::refreshAdjacencyMatrix(){
+    std::string vertices = client->getVertices();
+    int verticesCount = vertices.size();
+    QStringList verticesNames;
+    QString vertexName;
+
+    for (int i = 0; i < verticesCount; i++){
+        vertexName = vertices.at(i);
+        verticesNames.append(vertexName);
+
+    }
+
+    ui->AdjacencyMatrix->setColumnCount(verticesCount);
+    ui->AdjacencyMatrix->setRowCount(verticesCount);
+    ui->AdjacencyMatrix->setHorizontalHeaderLabels(verticesNames);
+    ui->AdjacencyMatrix->setVerticalHeaderLabels(verticesNames);
+
 }

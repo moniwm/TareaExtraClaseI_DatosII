@@ -160,14 +160,19 @@ public:
         return this->vertices;
     }
 
-    void printVertices(){
+    std::string printVertices(){
+        std::string vertices = "";
         NodeLL<Vertex> *ptr = this->vertices->getFirst();
         while(ptr != nullptr){
-            std::cout << " " << ptr->getData()->getValue();
+            std::string vertexName = ptr->getData()->getValue();
+            vertices = vertices+vertexName;
+            std::cout << " " << vertexName;
             ptr = ptr->getNext();
         }
         std::cout<<"\n";
         delete ptr;
+
+        return vertices;
 
     }
 

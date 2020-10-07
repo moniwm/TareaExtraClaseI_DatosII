@@ -35,6 +35,8 @@ private slots:
 
     void on_btn_shortestPath_clicked();
 
+    void refreshAdjacencyMatrix();
+
 private:
     Ui::MainWindow *ui;
 };
