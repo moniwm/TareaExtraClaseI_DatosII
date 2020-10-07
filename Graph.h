@@ -103,6 +103,7 @@ class Graph{
     LinkedList<Vertex> *vertices;
     LinkedList<Edge> *edges;
     int numberVertices;
+    std::string adjacencyMatrix;
 
 
     /**
@@ -161,7 +162,9 @@ public:
     }
 
     std::string printVertices(){
-        std::string vertices = "";
+
+        numberVertices = this->vertices->getSize();
+        std::string vertices = std::to_string(numberVertices);
         NodeLL<Vertex> *ptr = this->vertices->getFirst();
         while(ptr != nullptr){
             std::string vertexName = ptr->getData()->getValue();
@@ -358,6 +361,51 @@ public:
      * with the shortest path between each pair of vertices.
      *
      */
+
+    std::string getAdjacencyMatrix(){
+        numberVertices = this->vertices->getSize();
+        int adjMatrix[numberVertices][numberVertices];
+        int infinite = 999999;
+        adjacencyMatrix = this->printVertices();
+
+        /**
+         * This part of the method creates the adjacency matrix.
+         */
+        std::string start;
+        std::string end;
+        NodeLL<Vertex> *rowPtr = this->vertices->getFirst();
+        NodeLL<Vertex> *columnPtr;
+
+        for(int i = 0; i < numberVertices; i++){
+            start = rowPtr->getData()->getValue();
+            columnPtr = this->vertices->getFirst();
+
+            for(int j = 0; j < numberVertices; j++){
+                end = columnPtr->getData()->getValue();
+                if (start == end){
+                    adjMatrix[i][j] = 0;
+                    adjacencyMatrix = adjacencyMatrix+"0";
+                }
+                else{
+                    if(doesEdgeExist(start, end)){
+                        int edgeCost = this->getEdge(start, end)->getCost();
+                        adjMatrix[i][j] = edgeCost;
+                        adjacencyMatrix = adjacencyMatrix + std::to_string(edgeCost);
+                    }
+                    else{
+                        adjMatrix[i][j] = infinite;
+                        adjacencyMatrix = adjacencyMatrix + "-";
+                    }
+                }
+
+                columnPtr = columnPtr->getNext();
+            }
+
+            rowPtr = rowPtr->getNext();
+        }
+
+        return this->adjacencyMatrix;
+    }
 
     void floydWarshall(){
 

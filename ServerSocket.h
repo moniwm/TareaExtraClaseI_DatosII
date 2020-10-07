@@ -129,7 +129,7 @@ public:
 
         else if(buffer[0] == '6'){
 
-            std::string vertices = graph->printVertices();
+            std::string vertices = graph->getAdjacencyMatrix();
 
             char message[vertices.size()+1];
             strcpy(message, vertices.c_str());
@@ -141,7 +141,7 @@ public:
         else if (n < 0){
             error("ERROR writing to socket");
         }
-        
+
     }
 
 

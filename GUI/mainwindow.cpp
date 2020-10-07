@@ -4,6 +4,7 @@
 #include <QMessageBox>
 
 ClientSocket *client;
+QStringList initialVertices;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -11,12 +12,24 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     client = new ClientSocket();
+    initialVertices << "A" << "B";
+    ui->AdjacencyMatrix->setColumnCount(2);
+    ui->AdjacencyMatrix->setRowCount(2);
+    ui->AdjacencyMatrix->setHorizontalHeaderLabels(initialVertices);
+    ui->AdjacencyMatrix->setVerticalHeaderLabels(initialVertices);
+    ui->AdjacencyMatrix->setItem(0,0,new QTableWidgetItem("0"));
+    ui->AdjacencyMatrix->setItem(0,1,new QTableWidgetItem("5"));
+    ui->AdjacencyMatrix->setItem(1,0,new QTableWidgetItem("5"));
+    ui->AdjacencyMatrix->setItem(1,1,new QTableWidgetItem("0"));
+
 
 }
 
 MainWindow::~MainWindow()
 {
+
     delete ui;
+
 }
 
 
@@ -39,11 +52,6 @@ void MainWindow::on_btn_addVertex_clicked()
     }
 
     QMessageBox::about(this, "Add vertex", message);
-
-    std::string vertices = client->getVertices();
-    QString strVertices = QString::fromStdString(vertices);
-
-    QMessageBox::about(this, "Vertices", strVertices);
 
     this->refreshAdjacencyMatrix();
 }
@@ -82,19 +90,31 @@ void MainWindow::on_btn_shortestPath_clicked()
 
 void MainWindow::refreshAdjacencyMatrix(){
     std::string vertices = client->getVertices();
-    int verticesCount = vertices.size();
+    int verticesCount = vertices.at(0) - '0';
     QStringList verticesNames;
     QString vertexName;
 
-    for (int i = 0; i < verticesCount; i++){
+    for (int i = 1; i <= verticesCount; i++){
         vertexName = vertices.at(i);
         verticesNames.append(vertexName);
-
     }
 
     ui->AdjacencyMatrix->setColumnCount(verticesCount);
     ui->AdjacencyMatrix->setRowCount(verticesCount);
     ui->AdjacencyMatrix->setHorizontalHeaderLabels(verticesNames);
     ui->AdjacencyMatrix->setVerticalHeaderLabels(verticesNames);
+
+    QString edgeCost;
+
+    int index = verticesCount+1;
+
+    for(int i = 0; i< verticesCount; i++){
+        for(int j = 0; j < verticesCount; j++){
+            edgeCost = vertices.at(index);
+            ui->AdjacencyMatrix->setItem(i, j, new QTableWidgetItem(edgeCost));
+            index++;
+        }
+
+    }
 
 }
