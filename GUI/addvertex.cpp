@@ -19,9 +19,6 @@ AddVertex::~AddVertex()
 void AddVertex::on_btn_AddNewVertex_clicked()
 {
     std::string vertexName = this->getVertex();
-    if(vertexName == ""){
-        QMessageBox::about(this, "Error adding vertex", "You have to give a valid value to the new vertex!");
-    }
     this->close();
 
 }

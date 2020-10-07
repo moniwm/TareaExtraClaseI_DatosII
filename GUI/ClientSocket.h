@@ -86,12 +86,21 @@ public:
 
     }
 
-    void addNewVertex(){
-        n = write(socketfd,"1",2);
+    std::string addNewVertex(std::string vertex){
+        std::string data = "1"+ vertex;
+        char charData[data.size()+1];
+        strcpy(charData, data.c_str());
+        n = write(socketfd,charData,strlen(charData));
 
-        /**char vertex[vertexName.size()];
-        strcpy(vertex, vertexName.c_str());
-        n = write(socketfd, vertex, vertexName.size()+1);**/
+        bzero(buffer,256);
+        n = read(socketfd,buffer,255);
+
+        std::string message(buffer);
+
+        n = write(socketfd, "Got your message!", 18);
+
+        return message;
+
     }
 
     void addNewEdge(){

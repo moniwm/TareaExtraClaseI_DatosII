@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ClientSocket.h"
+#include <QMessageBox>
 
 ClientSocket *client;
 
@@ -24,8 +25,20 @@ void MainWindow::on_btn_addVertex_clicked()
     addVertexWindow = new AddVertex(this);
     addVertexWindow->setModal(true);
     addVertexWindow->exec();
-    client->addNewVertex();
+    std::string vertexName = addVertexWindow->getVertex();
 
+    QString message;
+
+    if(vertexName == ""){
+        message = "You have to give a valid value to the vertex!";
+    }
+
+    else{
+        std::string result = client->addNewVertex(vertexName);
+        message = QString::fromStdString(result);
+    }
+
+    QMessageBox::about(this, "Add vertex", message);
 }
 
 void MainWindow::on_btn_addEdge_clicked()

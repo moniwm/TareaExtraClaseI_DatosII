@@ -100,31 +100,23 @@ public:
             error("Error reading from socket!");
         }
 
-        std::cout<<"Operation: " << buffer;
-
         if(buffer[0]=='1'){
-            bzero(buffer,256);
 
-            n = write(newSocketfd,"Add vertex",18);
+            std::string vertex(1, buffer[1]);
 
-            bzero(buffer,256);
-            n = read(newSocketfd,buffer,255);
+            std::string result = graph->addVertex(vertex);
 
-            std::string message = graph->addVertex(buffer);
+            char message[result.size()+1];
+            strcpy(message, result.c_str());
+
+            n = write(newSocketfd, message, strlen(message));
             graph->printVertices();
-
-            char result[message.size()+1];
-            strcpy(result, message.c_str());
-            n = write(newSocketfd, result, strlen(result));
-
-            bzero(buffer,256);
-            n = read(newSocketfd,buffer,255);
-
         }
 
-        else if(buffer[0]=='2'){
+        else if(buffer[0] == '2'){
             std::cout << "Añadamos un edge";
         }
+
         else if(buffer[0]=='3'){
             std::cout << "Eliminemos un vértice";
         }
@@ -135,17 +127,11 @@ public:
             std::cout << "Floyd Warshall";
         }
 
-        if (n < 0){
+        else if (n < 0){
             error("ERROR writing to socket");
         }
-        n = write(newSocketfd,"I got your message",18);
-
-        if (n < 0){
-            error("ERROR writing to socket");
-        }
-
-        std::cout<< "Message sent! \n";
     }
+
 
     /**
      * Closes the server socket.

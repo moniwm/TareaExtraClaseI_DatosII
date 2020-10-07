@@ -186,6 +186,7 @@ public:
 
    std::string addVertex(std::string inputValue){
 
+
         if(this->containsVertex(inputValue)){
             return "The vertex already exists in the graph!";
         }
