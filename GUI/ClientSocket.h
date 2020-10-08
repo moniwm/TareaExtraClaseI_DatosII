@@ -95,10 +95,19 @@ public:
         return message;
     }
 
-    void deleteVertex(){
-        n = write(socketfd, "3", 2);
+    std::string deleteVertex(std::string vertex){
 
+        std::string data = "3"+ vertex;
+        char charData[data.size()+1];
+        strcpy(charData, data.c_str());
+        n = write(socketfd,charData,strlen(charData));
 
+        bzero(buffer,256);
+        n = read(socketfd,buffer,255);
+
+        std::string message(buffer);
+
+        return message;
     }
 
     void deleteEdge(){

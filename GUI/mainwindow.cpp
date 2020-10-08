@@ -81,8 +81,19 @@ void MainWindow::on_btn_deleteVertex_clicked()
 {
     deleteVertexWindow = new DeleteVertex(this);
     deleteVertexWindow->setModal(true);
+    deleteVertexWindow->getVertices(activeVertices);
     deleteVertexWindow->exec();
-    client->deleteVertex();
+
+    std::string vertex = deleteVertexWindow->getVertex();
+
+    QString message;
+
+    std::string result = client->deleteVertex(vertex);
+    message = QString::fromStdString(result);
+
+    QMessageBox::about(this, "Delete vertex", message);
+
+    this->refreshAdjacencyMatrix();
 }
 
 void MainWindow::on_btn_deleteEdge_clicked()

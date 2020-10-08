@@ -128,7 +128,14 @@ public:
         }
 
         else if(buffer[0]=='3'){
-            std::cout << "Eliminemos un vértice";
+            std::string vertex(1, buffer[1]);
+
+            std::string result = graph->deleteVertex(vertex);
+
+            char message[result.size()+1];
+            strcpy(message, result.c_str());
+
+            n = write(newSocketfd, message, strlen(message));
         }
         else if(buffer[0]=='4'){
             std::cout << "Eliminemos un edge";

@@ -205,18 +205,19 @@ public:
 
     }
 
-    void deleteVertex(std::string vertexName){
+    std::string deleteVertex(std::string vertexName){
         NodeLL<Vertex> *ptr = this->vertices->getFirst();
 
         while(ptr != nullptr){
             if(ptr->getData()->getValue() == vertexName){
                 this->vertices->remove(ptr->getData());
                 this->deleteEdge(vertexName);
-                return;
+                return "The vertex was successfully deleted!";
             }
             ptr = ptr->getNext();
         }
-        std::cout <<"The vertex '"<< vertexName << "' doesn't belong to the graph \n";
+
+        return "Done";
     }
 
     std::string addEdge(std::string start, int cost, std::string end){
