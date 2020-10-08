@@ -18,3 +18,11 @@ void DeleteVertex::on_btn_deleteVertexConfirm_clicked()
     std::string vertexName = ui->comboBox_VertexName->currentText().toStdString();
     this->close();
 }
+
+void DeleteVertex::getVertices(QStringList vertices){
+    ui->comboBox_VertexName->addItems(vertices);
+}
+
+std::string DeleteVertex::getVertex(){
+    return ui->comboBox_VertexName->currentText().toStdString();
+}
