@@ -14,6 +14,8 @@ class DeleteVertex : public QDialog
 public:
     explicit DeleteVertex(QWidget *parent = nullptr);
     ~DeleteVertex();
+    void getVertices(QStringList vertices);
+    std::string getVertex();
 
 private slots:
     void on_btn_deleteVertexConfirm_clicked();

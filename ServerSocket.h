@@ -110,11 +110,21 @@ public:
             strcpy(message, result.c_str());
 
             n = write(newSocketfd, message, strlen(message));
-            graph->printVertices();
+
         }
 
         else if(buffer[0] == '2'){
-            std::cout << "Añadamos un edge";
+            std::string startVertex(1, buffer[1]);
+            std::string endVertex(1, buffer[3]);
+
+            int cost = buffer[2] - '0';
+
+            std::string result = graph->addEdge(startVertex, cost, endVertex);
+
+            char message[result.size()+1];
+            strcpy(message, result.c_str());
+
+            n = write(newSocketfd, message, strlen(message));
         }
 
         else if(buffer[0]=='3'){
@@ -138,9 +148,10 @@ public:
             graph->printVertices();
         }
 
-        else if (n < 0){
+        else if (n < 0) {
             error("ERROR writing to socket");
         }
+
 
     }
 

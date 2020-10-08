@@ -211,7 +211,7 @@ public:
         while(ptr != nullptr){
             if(ptr->getData()->getValue() == vertexName){
                 this->vertices->remove(ptr->getData());
-                deleteEdge(vertexName);
+                this->deleteEdge(vertexName);
                 return;
             }
             ptr = ptr->getNext();
@@ -219,12 +219,18 @@ public:
         std::cout <<"The vertex '"<< vertexName << "' doesn't belong to the graph \n";
     }
 
-    void addEdge(std::string start, int cost, std::string end){
+    std::string addEdge(std::string start, int cost, std::string end){
+
         Vertex *startVertex = this->getVertex(start);
         Vertex*endVertex = this->getVertex(end);
 
+        if(doesEdgeExist(start, end)){
+            return "The edge requested already exist!";
+        }
+
         Edge *newEdge = new Edge(startVertex, endVertex, cost);
         this->edges->insertElement(newEdge);
+        return "The edge was successfully added!";
 
     }
 
@@ -232,46 +238,25 @@ public:
      * This method is used to make sure that every vertex has a connection to it and from it.
      */
 
-    void checkVertexConnections(){
+    std::string checkVertexConnections(){
         NodeLL<Vertex> *ptr = this->vertices->getFirst();
-        Vertex *ptrV;
 
         while(ptr!= nullptr){
             Vertex *ptrVertex = ptr->getData();
             std::string vertexName;
-            int cost;
 
 
             if(ptrVertex->getLeadNodes()==0){
-                std::cout <<"The vertex '" << ptrVertex->getValue() << "' doesn't lead to another vertex. \n";
-                std::cout <<"Add edge \n From " << ptrVertex->getValue() << "\n";
-                std::cout << "To: ";
-                std::cin >> vertexName;
-                std::cout << "With a cost of: ";
-                std::cin >>cost;
-
-                this->addEdge(ptrVertex->getValue(), cost, vertexName);
-                ptrV = this->getVertex(vertexName);
-                ptrV->addIncomingNode();
-                ptrVertex->addDestinyNode();
+                return "The vertex '" + ptrVertex->getValue() +"' doesn't lead to another vertex. Verify connections!";
             }
 
             if(ptrVertex->getReachedNodes()==0){
-                std::cout <<"The vertex '" << ptrVertex->getValue() << "' can't be reached. \n";
-                std::cout <<"Add edge \n To " << ptrVertex->getValue() << "\n";
-                std::cout << "From: ";
-                std::cin >> vertexName;
-                std::cout << "With a cost of: ";
-                std::cin >>cost;
-
-                this->addEdge(vertexName, cost, ptrVertex->getValue());
-                ptrV = this->getVertex(vertexName);
-                ptrV->addDestinyNode();
-                ptrVertex->addIncomingNode();
+                return "The vertex '" + ptrVertex->getValue() +"' can't be reached. Verify connections!";
             }
 
             ptr = ptr->getNext();
         }
+        return "Floyd Warshall";
     }
 
     /**
@@ -279,7 +264,7 @@ public:
      * @param start the start vertex
      * @param end the end vertex
      */
-    void deleteEdge(std::string start, std::string end){
+    std::string deleteEdge(std::string start, std::string end){
         Vertex *startVertex = this->getVertex(start);
         Vertex *endVertex = this->getVertex(end);
 
@@ -288,18 +273,16 @@ public:
             std::string startTemp = ptrEdge->getData()->getStartVertex()->getValue();
             std::string endTemp = ptrEdge->getData()->getEndNodes()->getValue();
             if(startTemp.compare(start)==0 && endTemp.compare(end)==0){
-                edges->remove(ptrEdge->getData());
+                this->edges->remove(ptrEdge->getData());
                 startVertex->deleteDestinyNode();
                 endVertex->deleteIncomingNode();
-                return;
+                return "The edge was deleted successfully!";
             }
 
             ptrEdge = ptrEdge->getNext();
         }
 
-        std::cout << "There was no edge found with the given values! \n";
-        delete startVertex;
-        delete endVertex;
+        return "There was no edge found with the given values! ";
 
     }
 
@@ -337,7 +320,6 @@ public:
 
             ptrEdge = ptrEdge->getNext();
         }
-        checkVertexConnections();
     }
 
 

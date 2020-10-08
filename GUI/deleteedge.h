@@ -14,6 +14,8 @@ class DeleteEdge : public QDialog
 public:
     explicit DeleteEdge(QWidget *parent = nullptr);
     ~DeleteEdge();
+    std::string getData();
+    void getVertices(QStringList vertices);
 
 private slots:
     void on_btn_deleteEdgeConfirm_clicked();

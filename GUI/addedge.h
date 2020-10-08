@@ -14,6 +14,8 @@ class AddEdge : public QDialog
 public:
     explicit AddEdge(QWidget *parent = nullptr);
     ~AddEdge();
+    std::string getData();
+    void getVertices(QStringList vertices);
 
 private slots:
     void on_pushButton_clicked();

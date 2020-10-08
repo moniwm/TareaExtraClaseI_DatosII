@@ -5,6 +5,7 @@
 
 ClientSocket *client;
 QStringList initialVertices;
+QStringList activeVertices;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -60,11 +61,21 @@ void MainWindow::on_btn_addEdge_clicked()
 {
     addEdgeWindow = new AddEdge(this);
     addEdgeWindow->setModal(true);
+    addEdgeWindow->getVertices(activeVertices);
     addEdgeWindow->exec();
-    client->addNewEdge();
 
+    std::string data = addEdgeWindow->getData();
 
+    QString message;
+
+    std::string result = client->addNewEdge(data);
+    message = QString::fromStdString(result);
+
+    QMessageBox::about(this, "Add edge", message);
+
+    this->refreshAdjacencyMatrix();
 }
+
 
 void MainWindow::on_btn_deleteVertex_clicked()
 {
@@ -98,6 +109,8 @@ void MainWindow::refreshAdjacencyMatrix(){
         vertexName = vertices.at(i);
         verticesNames.append(vertexName);
     }
+
+    activeVertices = verticesNames;
 
     ui->AdjacencyMatrix->setColumnCount(verticesCount);
     ui->AdjacencyMatrix->setRowCount(verticesCount);

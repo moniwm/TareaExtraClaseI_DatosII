@@ -74,26 +74,6 @@
      <height>41</height>
     </rect>
    </property>
-   <item>
-    <property name="text">
-     <string>A</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>B</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>C</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>D</string>
-    </property>
-   </item>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
@@ -122,26 +102,6 @@
      <height>41</height>
     </rect>
    </property>
-   <item>
-    <property name="text">
-     <string>A</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>B</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>C</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>D</string>
-    </property>
-   </item>
   </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">

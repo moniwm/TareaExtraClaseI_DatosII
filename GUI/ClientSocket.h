@@ -65,27 +65,6 @@ public:
 
     }
 
-    void sendMessage(){
-
-        std::cout << "Please enter the message: ";
-
-        bzero(buffer,256);
-        fgets(buffer,255,stdin);
-        n = write(socketfd,buffer,strlen(buffer));
-
-        if (n < 0){
-            error("ERROR writing to socket");
-        }
-
-        bzero(buffer,256);
-        n = read(socketfd,buffer,255);
-
-        if (n < 0){
-            error("ERROR reading from socket");
-        }
-
-    }
-
     std::string addNewVertex(std::string vertex){
         std::string data = "1"+ vertex;
         char charData[data.size()+1];
@@ -97,61 +76,42 @@ public:
 
         std::string message(buffer);
 
-        n = write(socketfd, "Got your message!", 18);
-
         return message;
 
     }
 
-    void addNewEdge(){
+    std::string addNewEdge(std::string edgeData){
 
-        n = write(socketfd, "2", 2);
+        std::string data = "2"+ edgeData;
+        char charData[data.size()+1];
+        strcpy(charData, data.c_str());
+        n = write(socketfd,charData,strlen(charData));
 
-       /**char start[startVertex.size()+1];
-       strcpy(start, startVertex.c_str());
-       n = write(socketfd, start, startVertex.size()+1);
+        bzero(buffer,256);
+        n = read(socketfd,buffer,255);
 
-       std::string costValue = std::to_string(cost);
-       char costChar[costValue.size()+1];
-       strcpy(costChar, costValue.c_str());
-       n = write(socketfd, costChar, costValue.size()+1);
+        std::string message(buffer);
 
-       char end[endVertex.size()];
-       strcpy(end, endVertex.c_str());
-       n = write(socketfd, end, endVertex.size()+1);**/
+        return message;
     }
 
     void deleteVertex(){
         n = write(socketfd, "3", 2);
 
-        /**char vertex[vertexName.size()+1];
-        strcpy(vertex, vertexName.c_str());
-        n = write(socketfd, vertex, vertexName.size()+1);**/
+
     }
 
     void deleteEdge(){
 
         n = write(socketfd, "4", 2);
 
-        /**char start[startVertex.size()+1];
-        strcpy(start, startVertex.c_str());
-        n = write(socketfd, start, startVertex.size()+1);
 
-        char end[endVertex.size()];
-        strcpy(end, endVertex.c_str());
-        n = write(socketfd, end, endVertex.size()+1);**/
     }
 
     void requestFloydWarshall(){
         n = write(socketfd, "5", 2);
 
-        /**char start[startVertex.size()+1];
-        strcpy(start, startVertex.c_str());
-        n = write(socketfd, start, startVertex.size()+1);
 
-        char end[endVertex.size()];
-        strcpy(end, endVertex.c_str());
-        n = write(socketfd, end, endVertex.size()+1);^**/
     }
 
     std::string getVertices(){
