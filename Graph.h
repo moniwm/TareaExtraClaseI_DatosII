@@ -277,7 +277,7 @@ public:
                 this->edges->remove(ptrEdge->getData());
                 startVertex->deleteDestinyNode();
                 endVertex->deleteIncomingNode();
-                return "The edge was deleted successfully!";
+                return "The edge was successfully deleted !";
             }
 
             ptrEdge = ptrEdge->getNext();

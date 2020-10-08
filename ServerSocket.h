@@ -138,7 +138,15 @@ public:
             n = write(newSocketfd, message, strlen(message));
         }
         else if(buffer[0]=='4'){
-            std::cout << "Eliminemos un edge";
+            std::string startVertex(1, buffer[1]);
+            std::string endVertex(1, buffer[2]);
+
+            std::string result = graph->deleteEdge(startVertex, endVertex);
+
+            char message[result.size()+1];
+            strcpy(message, result.c_str());
+
+            n = write(newSocketfd, message, strlen(message));
         }
         else if(buffer[0]=='5'){
             std::cout << "Floyd Warshall";

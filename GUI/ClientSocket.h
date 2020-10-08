@@ -110,9 +110,19 @@ public:
         return message;
     }
 
-    void deleteEdge(){
+   std::string deleteEdge(std::string edgeData){
 
-        n = write(socketfd, "4", 2);
+       std::string data = "4"+ edgeData;
+       char charData[data.size()+1];
+       strcpy(charData, data.c_str());
+       n = write(socketfd,charData,strlen(charData));
+
+       bzero(buffer,256);
+       n = read(socketfd,buffer,255);
+
+       std::string message(buffer);
+
+       return message;
 
 
     }
