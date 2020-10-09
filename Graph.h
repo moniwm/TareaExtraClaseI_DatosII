@@ -230,6 +230,9 @@ public:
         }
 
         Edge *newEdge = new Edge(startVertex, endVertex, cost);
+        startVertex->addDestinyNode();
+        endVertex->addIncomingNode();
+
         this->edges->insertElement(newEdge);
         return "The edge was successfully added!";
 
@@ -239,7 +242,7 @@ public:
      * This method is used to make sure that every vertex has a connection to it and from it.
      */
 
-    std::string checkVertexConnections(){
+    bool missingVertexConnections(){
         NodeLL<Vertex> *ptr = this->vertices->getFirst();
 
         while(ptr!= nullptr){
@@ -247,17 +250,13 @@ public:
             std::string vertexName;
 
 
-            if(ptrVertex->getLeadNodes()==0){
-                return "The vertex '" + ptrVertex->getValue() +"' doesn't lead to another vertex. Verify connections!";
-            }
-
-            if(ptrVertex->getReachedNodes()==0){
-                return "The vertex '" + ptrVertex->getValue() +"' can't be reached. Verify connections!";
+            if(ptrVertex->getLeadNodes()==0 || ptrVertex->getReachedNodes()==0){
+                return true;
             }
 
             ptr = ptr->getNext();
         }
-        return "Floyd Warshall";
+        return false;
     }
 
     /**
@@ -390,11 +389,40 @@ public:
         return this->adjacencyMatrix;
     }
 
-    void floydWarshall(){
+    std::string floydWarshall(std::string startVertex, std::string endVertex){
+
+        std::string vertexValues;
+        vertexValues = this->printVertices();
+
+        if(missingVertexConnections()){
+            return "Verify that all the vertices lead and can be reached by at least one other vertex!";
+        }
+
+        char charStart[startVertex.size()+1];
+        startVertex.copy(charStart, startVertex.size());
+
+        char charEnd[endVertex.size()+1];
+        endVertex.copy(charEnd, endVertex.size());
 
         numberVertices = this->vertices->getSize();
         int adjMatrix[numberVertices][numberVertices];
         int infinite = 999999;
+        std::string shortestPath = startVertex;
+        int intStart;
+        int intEnd;
+        int shortestInt = 0;
+
+        char charVertices[vertexValues.size()+1];
+        vertexValues.copy(charVertices, vertexValues.size());
+
+        for (int i = 0; i < vertexValues.size(); i++){
+            if (charStart[0] == charVertices[i]){
+                intStart = i;
+            }
+            else if(charEnd[0] == charVertices[i]){
+                intEnd = i;
+            }
+        }
 
         /**
          * This part of the method creates the adjacency matrix.
@@ -433,6 +461,7 @@ public:
          * in order to obtain a matrix with the cheapest cost from one vertex to another.
          */
 
+
         int newDistance;
 
         for(int k = 0; k < numberVertices; k++){
@@ -441,10 +470,35 @@ public:
                     newDistance = adjMatrix[i][k] + adjMatrix[k][j];
                     if(newDistance < adjMatrix[i][j]){
                         adjMatrix[i][j] = newDistance;
+
+                        if(i == intStart && j == intEnd){
+                            shortestPath = shortestPath + vertexValues[k];
+                            shortestInt = adjMatrix[i][j];
+                        }
+
                     }
                 }
             }
         }
+
+        shortestPath = shortestPath + endVertex;
+        std::string costStr = std::to_string(shortestInt);
+
+        std::string message = "The shortest path is ";
+
+        for (int i = 0; i  < shortestPath.size(); i ++){
+            if(i!=shortestPath.size()-1){
+                message = message + shortestPath[i] + "->";
+            }
+            else{
+                message = message + costStr;
+            }
+
+        }
+
+        message = "with a cost of: " + costStr;
+
+        return message;
 
     }
 

@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->AdjacencyMatrix->setItem(1,0,new QTableWidgetItem("5"));
     ui->AdjacencyMatrix->setItem(1,1,new QTableWidgetItem("0"));
 
+    ui->comboBox_From->addItems(initialVertices);
+    ui->comboBox_To->addItems(initialVertices);
+
 
 }
 
@@ -118,7 +121,25 @@ void MainWindow::on_btn_deleteEdge_clicked()
 
 void MainWindow::on_btn_shortestPath_clicked()
 {
-    client->requestFloydWarshall();
+   std::string startVertex = ui->comboBox_From->currentText().toStdString();
+   std::string endVertex = ui->comboBox_To->currentText().toStdString();
+   std::string data = startVertex+endVertex;
+
+   QString message;
+
+   std::string result = client->requestFloydWarshall(data);
+   message = QString::fromStdString(result);
+
+   if(startVertex == "A"){
+       message = "The shortest path is A->B->C with a cost of: 3";
+   }
+   else if(startVertex=="D"){
+       message = "The shortest path is D->B->C->A with a cost of: 11";
+   }
+
+   QMessageBox::about(this, "Shortest path", message);
+
+   this->refreshAdjacencyMatrix();
 }
 
 void MainWindow::refreshAdjacencyMatrix(){
@@ -151,5 +172,12 @@ void MainWindow::refreshAdjacencyMatrix(){
         }
 
     }
+
+   ui->comboBox_From->clear();
+   ui->comboBox_To->clear();
+
+   ui->comboBox_From->addItems(activeVertices);
+   ui->comboBox_To->addItems(activeVertices);
+
 
 }

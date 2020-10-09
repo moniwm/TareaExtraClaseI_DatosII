@@ -127,8 +127,18 @@ public:
 
     }
 
-    void requestFloydWarshall(){
-        n = write(socketfd, "5", 2);
+    std::string requestFloydWarshall(std::string verticesData){
+        std::string data = "5"+ verticesData;
+        char charData[data.size()+1];
+        strcpy(charData, data.c_str());
+        n = write(socketfd,charData,strlen(charData));
+
+        bzero(buffer,256);
+        n = read(socketfd,buffer,255);
+
+        std::string message(buffer);
+
+        return message;
 
 
     }

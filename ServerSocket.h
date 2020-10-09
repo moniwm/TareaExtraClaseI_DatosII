@@ -59,13 +59,6 @@ public:
         serverAddress.sin_addr.s_addr = INADDR_ANY;
         serverAddress.sin_port = htons(portNumber); ///htons(portNumber) converts a host number in host byte order to a port number in network byte order.
 
-        /**
-         * @brief bind() Tries to bind a socket to an address, in this case the address of the current host and port number
-         * in which the server will run.
-         */
-        if (bind(socketfd, (struct sockaddr *) &serverAddress, sizeof(serverAddress)) < 0){
-            error("ERROR on binding");
-        }
 
         /**
          * @brief listen() allos the process to listen on the socket for connections.
@@ -149,7 +142,16 @@ public:
             n = write(newSocketfd, message, strlen(message));
         }
         else if(buffer[0]=='5'){
-            std::cout << "Floyd Warshall";
+            std::string startVertex(1, buffer[1]);
+            std::string endVertex(1, buffer[2]);
+
+            std::string result = graph->floydWarshall(startVertex, endVertex);
+
+            char message[result.size()+1];
+            strcpy(message, result.c_str());
+
+
+            n = write(newSocketfd, message, strlen(message));
         }
 
         else if(buffer[0] == '6'){
