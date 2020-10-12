@@ -130,13 +130,6 @@ void MainWindow::on_btn_shortestPath_clicked()
    std::string result = client->requestFloydWarshall(data);
    message = QString::fromStdString(result);
 
-   if(startVertex == "A"){
-       message = "The shortest path is A->B->C with a cost of: 3";
-   }
-   else if(startVertex=="D"){
-       message = "The shortest path is D->B->C->A with a cost of: 11";
-   }
-
    QMessageBox::about(this, "Shortest path", message);
 
    this->refreshAdjacencyMatrix();
